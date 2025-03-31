@@ -32,10 +32,13 @@ public class Main {
         BufferedReader in = new BufferedReader(new InputStreamReader(sck.getInputStream()));
         PrintWriter out = new PrintWriter(new OutputStreamWriter(sck.getOutputStream()), true);
         Scanner s = new Scanner(System.in, "UTF-8");
-        String risposta = "";
+        String response = "";
         do {
-            risposta = in.readLine();
-            System.out.print(risposta);
+            
+            response = in.readLine();
+
+          
+            System.out.print(response);
 
             String comand = s.nextLine();
 

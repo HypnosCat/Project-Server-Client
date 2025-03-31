@@ -36,8 +36,8 @@ public class ServerThread extends Thread {
             // ciclo di ricezione dal client e invio di risposta
             out.print("(END to close connection): ");
             out.flush();
-           
-            while (true) { 
+
+            while (true) {
                 String msg = "";
                 out.print(">: " + msg + "\n");
                 out.flush();
@@ -95,29 +95,50 @@ public class ServerThread extends Thread {
                 break;
 
             case GET_TYPE:
-                String data = dataBaseManager.findDataByTipologia(n[1]);
-                System.out.println("sending data to the client: " + clientSocket + "\n");
-                // Debugging output
-                // System.out.println(data);
-                out.print(data);
+                if (n.length == 2) {
+                    if (!n[1].isEmpty()) {
+                        String dataT = dataBaseManager.findDataByTipologia(n[1]);
+                        System.out.println("sending data to the client: " + clientSocket + "\n");
+                        // Debugging output
+                        // System.out.println(data);
+                        msg = dataT + "\n";
+                    }
+                }else{
+                    msg = "incomplete command !";
+                }
+
                 break;
 
             case GET_CATEGORY:
-                String dataC = dataBaseManager.findDataByCategoria(n[1]);
-                System.out.println("sending data to the client: " + clientSocket + "\n");
-                // Debugging output
-                // System.out.println(data);
-                msg = dataC;
+                if (n.length == 2) {
+                    if (!n[1].isEmpty()) {
+                        String dataC = dataBaseManager.findDataByCategoria(n[1]);
+                        System.out.println("sending data to the client: " + clientSocket + "\n");
+                        // Debugging output
+                        // System.out.println(data);
+                        msg = dataC + "\n";
+                    }
+                }else{
+                    msg = "incomplete command !";
+                }
+
                 break;
 
             case GET_MUNICIPIO:
-                String strM = n[1];
-                String strMEX = n[2];
-                String dataM = dataBaseManager.findDataByMunicipio(strM, strMEX);
-                System.out.println("sending data to the client: " + clientSocket + "\n");
-                // Debugging output
-                // System.out.println(data);
-                msg = dataM;
+                if (n.length == 3) {
+                    if (!n[1].isEmpty() & !n[2].isEmpty()) {
+                        String strM = n[1];
+                        String strMEX = n[2];
+                        String dataM = dataBaseManager.findDataByMunicipio(strM, strMEX);
+                        System.out.println("sending data to the client: " + clientSocket + "\n");
+                        // Debugging output
+                        // System.out.println(data);
+                        msg = dataM + "\n";
+                    }
+                }else{
+                    msg = "incomplete command !";
+                }
+
                 break;
         }
         return msg;
