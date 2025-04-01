@@ -18,7 +18,7 @@ public class DataBaseManager {
                 String key = entry.getKey();
                 SectionDataBase value = entry.getValue();
                 if (key.equals(tipologia)) {
-                    msg += value.getDataByTipologia()+"\n";
+                    msg += value.getDataByTipologia();
                 }
             }
             return msg;
@@ -28,7 +28,7 @@ public class DataBaseManager {
             String msg = "";
             for(java.util.Map.Entry<String, SectionDataBase> entry: listDB.entrySet()){
                 SectionDataBase value = entry.getValue();
-                msg += value.getDataByCategoria(categoriaN)+"\n";
+                msg += value.getDataByCategoria(categoriaN);
             }
             return msg;
         }
@@ -37,7 +37,7 @@ public class DataBaseManager {
             String msg = "";
             for(java.util.Map.Entry<String, SectionDataBase> entry: listDB.entrySet()){
                 SectionDataBase value = entry.getValue();
-                msg += value.getDataByMunicipio(municipioN, municipioNEX)+"\n";
+                msg += value.getDataByMunicipio(municipioN, municipioNEX);
             }
             return msg;
         }

@@ -34,14 +34,9 @@ public class Main {
         Scanner s = new Scanner(System.in, "UTF-8");
         String response = "";
         do {
-            
             response = in.readLine();
-
-          
             System.out.print(response);
-
             String comand = s.nextLine();
-
             // System.out.format("Invio al server: %s%n" + "\n", comand);
             out.println(comand);
             out.flush();
