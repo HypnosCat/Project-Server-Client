@@ -35,32 +35,36 @@ public class ServerThread extends Thread {
             BufferedWriter bw = new BufferedWriter(osw);
             out = new PrintWriter(bw, true);
             // ciclo di ricezione dal client e invio di risposta
-            out.print("(END to close connection): ");
+            out.println("(END to close connection): ");
             out.flush();
-
+            String str;
             while (true) {
-                String msg = "";
-                out.println(">: " + msg);
-                out.flush();
+                str = in.readLine(); // Читання рядка з клієнта
 
-                String str = in.readLine();
+                if (str == null || str.isEmpty()) {
+                    out.println(">: ");
+                    out.flush();
+                    continue; // Якщо рядок порожній, продовжити цикл
+                }
+
                 System.out.println("Da client: " + str);
 
-                msg = manager(str);
+                // Обробка команди
+                String msg = manager(str);
                 if (msg != null) {
                     out.println(">: " + msg);
                     out.flush();
                 }
 
-                // ferma il server
+                // Ferma il server
                 if (str.equals("STOP")) {
                     Main.stopServer();
                     break;
                 }
 
-                // ferma il conesione server con client
+                // Ferma la connessione server con client
                 if (str.equals("END")) {
-                    out.print("END");
+                    out.println("END");
                     break;
                 }
             }
@@ -72,14 +76,6 @@ public class ServerThread extends Thread {
             System.err.println("Accept failed");
             System.exit(1);
         }
-    }
-
-    public String MSG(String str) {
-        String msg = "";
-        if (str.equals("TEST")) {
-            msg = "TEST MESSAGE";
-        }
-        return msg;
     }
 
     public String manager(String srt) {

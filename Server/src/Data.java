@@ -158,7 +158,7 @@ public class Data {
 
     @Override
     public String toString() {
-        return "\nMunicipio: " + Municipio + ", Tipologia: " + Tipologia + ", Classificazione: " + Classificazione
+        return "\tMunicipio: " + Municipio + ", Tipologia: " + Tipologia + ", Classificazione: " + Classificazione
                 + ", Denominazione: " + Denominazione + ", Indirizzo: " + Indirizzo + ", Singole: " + Singole
                 + ", Doppie:"+ Doppie + ", Triple: " + Triple + ", Quadruple: " + Quadruple + ", Quintuple: " + Quintuple
                 + ", Sestuple: " + Sestuple + ", TotaleCamere: " + TotaleCamere + ", PostiLetto: " + PostiLetto
