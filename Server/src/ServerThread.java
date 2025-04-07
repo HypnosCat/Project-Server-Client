@@ -18,14 +18,18 @@ public class ServerThread extends Thread {
     private BufferedReader in = null;
     private PrintWriter out = null;
     private DataBaseManager dataBaseManager = null;
+    private Window window = null;
+    private int index = 0;
 
-    public ServerThread(Socket clientSocket, DataBaseManager dataBaseManager) {
+    public ServerThread(Socket clientSocket, DataBaseManager dataBaseManager , Window window) {
         this.clientSocket = clientSocket;
         this.dataBaseManager = dataBaseManager;
+        this.window = window;
     }
 
     @Override
     public void run() {
+        index = window.addClient();
         try {
             // creazione stream di input da clientSocket
             InputStreamReader isr = new InputStreamReader(clientSocket.getInputStream());
@@ -48,7 +52,7 @@ public class ServerThread extends Thread {
                 }
 
                 System.out.println("Da client: " + str);
-
+                this.window.setClientMSG(index,"- Сommands: " + str +"  -> entered by the client: " + clientSocket+ "\n");
                 // Обробка команди
                 String msg = manager(str);
                 if (msg != null) {
@@ -72,6 +76,9 @@ public class ServerThread extends Thread {
             out.close();
             in.close();
             System.out.println("connection completed: " + clientSocket);
+            this.window.setServeStatusMSG("!-Connection completed: " + clientSocket+ "\n");
+
+            this.window.removeTabbedPane(index);
         } catch (IOException e) {
             System.err.println("Accept failed");
             System.exit(1);
@@ -97,6 +104,7 @@ public class ServerThread extends Thread {
                     if (!n[1].equals(HELP)) {
                         String dataT = dataBaseManager.findDataByTipologia(n[1]);
                         System.out.println("sending data to the client: " + clientSocket + "\n");
+                        this.window.setClientMSG(index,"sending data to the client: " + clientSocket + "\n");
                         // Debugging output
                         // System.out.println(data);
                         msg = dataT;
@@ -115,6 +123,8 @@ public class ServerThread extends Thread {
                     if (!n[1].equals(HELP)) {
                         String dataC = dataBaseManager.findDataByCategoria(n[1]);
                         System.out.println("sending data to the client: " + clientSocket + "\n");
+                        this.window.setClientMSG(index,"sending data to the client: " + clientSocket + "\n");
+
                         // Debugging output
                         //System.out.println(dataC);
                         msg = dataC;
@@ -135,6 +145,7 @@ public class ServerThread extends Thread {
                             String strMEX = n[2];
                             String dataM = dataBaseManager.findDataByMunicipio(strM, strMEX);
                             System.out.println("sending data to the client: " + clientSocket + "\n");
+                            this.window.setClientMSG(index,"sending data to the client: " + clientSocket + "\n");
                             // Debugging output
                             // System.out.println(data);
                             msg = dataM;

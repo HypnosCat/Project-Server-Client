@@ -10,26 +10,28 @@ public class Main {
 
     /**
      * @param args the command line arguments
-     * @throws java.io.IOException
+     * @throws IOException
      */
 
     public static void main(String[] args) throws IOException {
         initDataBase();
+        Window windowS = new Window();
+        windowS.start();
 
         //System.out.println(dataBaseManager.findDataByTipologia("Guest House o Affittacamere"));
         
         try (  ServerSocket serverSocket = new ServerSocket(PORT)) {
             System.out.println("EchoServer: started ");
             System.out.println("Server Socket: " + serverSocket);
-
             Socket clientSocket=null;
-
+            windowS.setServeStatusMSG("EchoServer: started \n"+"Server Socket: +" + serverSocket);
             while (!exit){
                 try {
                     // bloccante finchè non avviene una connessione
                     clientSocket = serverSocket.accept();
                     System.out.println("Connection accepted: "+ clientSocket);
-                    serverThread = new ServerThread(clientSocket , dataBaseManager);
+                    windowS.setServeStatusMSG("Connection accepted: "+ clientSocket);
+                    serverThread = new ServerThread(clientSocket , dataBaseManager ,windowS);
                     serverThread.start();
                 }
                 catch (IOException e) {
