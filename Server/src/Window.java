@@ -11,6 +11,7 @@ public class Window extends Thread {
     public JTextArea ServerStatusMSG = new JTextArea();
     public JTabbedPane clientTabbedPane = new JTabbedPane();
     private int clientCount = 0; // To keep track of the number of clients
+    private JPanel clientStatusPanel;
 
     public Window() {}
 
@@ -27,11 +28,26 @@ public class Window extends Thread {
         f.setLayout(new BorderLayout());
 
         f.add(ServerStatus(), BorderLayout.WEST);
-        f.add(clientTabbedPane, BorderLayout.CENTER); // Use the tabbed pane directly
+
+        clientStatusPanel = clientStatus(clientTabbedPane);
+        clientStatusPanel.setBorder(BorderFactory.createTitledBorder("Client Status"));
+        f.add(clientStatusPanel, BorderLayout.CENTER); // Use the tabbed pane directly
 
         f.setVisible(true);
     }
 
+    public JPanel clientStatus(JTabbedPane tabbedPane){
+        JPanel panel = new JPanel();
+        if (tabbedPane.getTabCount() == 0) {
+            // If there are no tabs, display a message
+            JLabel noClientsLabel = new JLabel("No connected clients.");
+            panel.add(noClientsLabel);
+        }else {
+            panel.add(tabbedPane);
+        }
+        return panel;
+    }
+    
     public JPanel ServerStatus() {
         JPanel panel = new JPanel();
         JScrollPane scrollPane = new JScrollPane(ServerStatusMSG);
@@ -62,7 +78,18 @@ public class Window extends Thread {
 
         // Create a new tab for the client
         clientTabbedPane.addTab("Client " + clientCount, scrollPane);
+
+        updateClientStatusPanel();
         return  clientCount-1;
+    }
+
+    // Method to update the client status panel
+    private void updateClientStatusPanel() {
+        // Remove the old panel and add the updated one
+        clientStatusPanel.removeAll();
+        clientStatusPanel.add(clientStatus(clientTabbedPane));
+        clientStatusPanel.revalidate();
+        clientStatusPanel.repaint();
     }
 
     public void setServeStatusMSG(String msg) {
@@ -78,6 +105,7 @@ public class Window extends Thread {
     public void removeTabbedPane(int index) {
         if (index >= 0 && index < clientTabbedPane.getTabCount()) {
             clientTabbedPane.removeTabAt(index); // Remove the tab at the specified index
+            updateClientStatusPanel();
         } else {
             System.out.println("Invalid index: " + index);
         }
