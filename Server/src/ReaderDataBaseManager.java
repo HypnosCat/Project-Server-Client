@@ -7,8 +7,15 @@ public class ReaderDataBaseManager {
     private HashMap <String , SectionDataBase> listDB = new HashMap<>();
 
     public void dataBaseReader(String fileName) throws IOException {
+        File file = new File (fileName);
+        // Check if the file exists
+        if (!file.exists()) {
+            System.err.println("File not found: " + file.getAbsolutePath());
+            return; // Exit the method if the file does not exist
+        }
+
      try {
-         File file = new File (fileName);
+
          Scanner readerFile = new Scanner (file);
          while (readerFile.hasNextLine()){
             String riga = readerFile.nextLine();

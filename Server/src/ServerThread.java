@@ -12,6 +12,7 @@ public class ServerThread extends Thread {
     private final String GET_MUNICIPIO = "GET_M";
     private final String TEST = "TEST";
     private final String MAN = "MAN";
+    private final String HELP = "-H";
 
     private Socket clientSocket = null;
     private BufferedReader in = null;
@@ -39,7 +40,7 @@ public class ServerThread extends Thread {
 
             while (true) {
                 String msg = "";
-                out.print(">: " + msg + "\n");
+                out.println(">: " + msg);
                 out.flush();
 
                 String str = in.readLine();
@@ -47,9 +48,10 @@ public class ServerThread extends Thread {
 
                 msg = manager(str);
                 if (msg != null) {
-                    out.print(">: " + msg + "\n");
+                    out.println(">: " + msg);
                     out.flush();
                 }
+
                 // ferma il server
                 if (str.equals("STOP")) {
                     Main.stopServer();
@@ -87,7 +89,7 @@ public class ServerThread extends Thread {
 
         switch (n[0]) {
             case MAN:
-                msg = "Comands: " + GET_TYPE + " ; " + GET_CATEGORY + " ; " + GET_MUNICIPIO;
+                msg = "Comands: " + GET_TYPE +" returns all data that are the same type "+ " ; " + GET_CATEGORY + " returns all data that are the same category "+" ; " + GET_MUNICIPIO + " returns all data that are the same 'municipio' ";
                 break;
 
             case TEST:
@@ -96,14 +98,17 @@ public class ServerThread extends Thread {
 
             case GET_TYPE:
                 if (n.length == 2) {
-                    if (!n[1].isEmpty()) {
+                    if (!n[1].equals(HELP)) {
                         String dataT = dataBaseManager.findDataByTipologia(n[1]);
                         System.out.println("sending data to the client: " + clientSocket + "\n");
                         // Debugging output
                         // System.out.println(data);
-                        msg = dataT + "\n";
+                        msg = dataT;
+                    } else {
+                        msg = GET_TYPE + " P <-(parametr is STRING) Exempl of comand -> "+GET_TYPE + " Residence";
                     }
-                }else{
+
+                } else {
                     msg = "incomplete command !";
                 }
 
@@ -111,14 +116,16 @@ public class ServerThread extends Thread {
 
             case GET_CATEGORY:
                 if (n.length == 2) {
-                    if (!n[1].isEmpty()) {
+                    if (!n[1].equals(HELP)) {
                         String dataC = dataBaseManager.findDataByCategoria(n[1]);
                         System.out.println("sending data to the client: " + clientSocket + "\n");
                         // Debugging output
-                        // System.out.println(data);
-                        msg = dataC + "\n";
+                        //System.out.println(dataC);
+                        msg = dataC;
+                    } else {
+                        msg = GET_CATEGORY + " P <-(parametr is INTEGER) Exempl of comand -> "+ GET_CATEGORY +" 1" ;
                     }
-                }else{
+                } else {
                     msg = "incomplete command !";
                 }
 
@@ -126,16 +133,23 @@ public class ServerThread extends Thread {
 
             case GET_MUNICIPIO:
                 if (n.length == 3) {
-                    if (!n[1].isEmpty() & !n[2].isEmpty()) {
-                        String strM = n[1];
-                        String strMEX = n[2];
-                        String dataM = dataBaseManager.findDataByMunicipio(strM, strMEX);
-                        System.out.println("sending data to the client: " + clientSocket + "\n");
-                        // Debugging output
-                        // System.out.println(data);
-                        msg = dataM + "\n";
+                    if (!n.equals(HELP)) {
+                        if (!n[1].isEmpty() & !n[2].isEmpty()) {
+                            String strM = n[1];
+                            String strMEX = n[2];
+                            String dataM = dataBaseManager.findDataByMunicipio(strM, strMEX);
+                            System.out.println("sending data to the client: " + clientSocket + "\n");
+                            // Debugging output
+                            // System.out.println(data);
+                            msg = dataM;
+                        }
+                    } else {
+                        msg = GET_MUNICIPIO
+                                + " P1 p2 <-(the first parametr is STRING , the second parametr is STRING) Exempl of comand -> "
+                                + GET_MUNICIPIO + " I XVII";
                     }
-                }else{
+
+                } else {
                     msg = "incomplete command !";
                 }
 

@@ -46,7 +46,7 @@ public class SectionDataBase {
         while (iterator.hasNext()){
             Data data = iterator.next();
             if (data.getMunicipio().equals("Municipio "+municipioN+" (ex Mun "+municipioNEX+")")){
-                //debug output
+                //Debugging output
                 //System.out.println("Municipio "+municipioN+" (ex Mun "+municipioNEX+")");
                 msg += data.toString();
             }
