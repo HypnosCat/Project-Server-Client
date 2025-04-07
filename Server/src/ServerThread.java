@@ -78,7 +78,7 @@ public class ServerThread extends Thread {
             System.out.println("connection completed: " + clientSocket);
             this.window.setServeStatusMSG("!-Connection completed: " + clientSocket+ "\n");
 
-            this.window.removeTabbedPane(index);
+            this.window.removeClient(index);
         } catch (IOException e) {
             System.err.println("Accept failed");
             System.exit(1);

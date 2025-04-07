@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -11,6 +12,7 @@ public class Window extends Thread {
     public JTextArea ServerStatusMSG = new JTextArea();
     public JTabbedPane clientTabbedPane = new JTabbedPane();
     private int clientCount = 0; // To keep track of the number of clients
+    private ArrayList<Client> activeClients  = new ArrayList<>();
     private JPanel clientStatusPanel;
 
     public Window() {}
@@ -47,7 +49,7 @@ public class Window extends Thread {
         }
         return panel;
     }
-    
+
     public JPanel ServerStatus() {
         JPanel panel = new JPanel();
         JScrollPane scrollPane = new JScrollPane(ServerStatusMSG);
@@ -67,13 +69,16 @@ public class Window extends Thread {
     // Method to add a new client
     public int addClient() {
         clientCount++; // Increment the client count
+        Client client = new Client(activeClients.size());
+        activeClients.add(client);
+/*
         JTextArea clientTextArea = new JTextArea();
         clientTextArea.setEditable(false);
         clientTextArea.setLineWrap(true);
         clientTextArea.setWrapStyleWord(true);
-        clientTextArea.setBackground(Color.LIGHT_GRAY);
+        clientTextArea.setBackground(Color.LIGHT_GRAY);*/
 
-        JScrollPane scrollPane = new JScrollPane(clientTextArea);
+        JScrollPane scrollPane = new JScrollPane(client.getTextArea());
         scrollPane.setPreferredSize(new Dimension(500, ALTEZZA));
 
         // Create a new tab for the client
@@ -97,14 +102,16 @@ public class Window extends Thread {
     }
 
     public void setClientMSG(int clientIndex, String msg) {
-        // Assuming clientIndex is 0-based
-        JTextArea clientTextArea = (JTextArea) ((JScrollPane) clientTabbedPane.getComponentAt(clientIndex)).getViewport().getView();
-        clientTextArea.append(msg + "\n");
+        if (clientIndex >= 0 && clientIndex < activeClients.size()) {
+            JTextArea clientTextArea = activeClients.get(clientIndex).getTextArea();
+            clientTextArea.append(msg + "\n");
+        }
     }
 
-    public void removeTabbedPane(int index) {
-        if (index >= 0 && index < clientTabbedPane.getTabCount()) {
-            clientTabbedPane.removeTabAt(index); // Remove the tab at the specified index
+    public void removeClient(int index) {
+        if (index >= 0 && index < activeClients.size()) {
+            clientTabbedPane.removeTabAt(index); // Видалити вкладку
+            activeClients.remove(index); // Видалити з списку
             updateClientStatusPanel();
         } else {
             System.out.println("Invalid index: " + index);
