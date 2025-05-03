@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 public class Window extends Thread {
     public final int ALTEZZA = 600;
     public final int LUNGEZZA = 800;
-    public JTextArea comandLineArea = new JTextArea(); // Перейменуйте для уникнення плутанини
-    private JTextField commandInput; // Замінюємо JButton на JTextField
+    public JTextArea comandLineArea = new JTextArea();
+    private JTextField commandInput;
     private JFrame f = new JFrame();
     private static final String [] tableObjects = {"Municipio" ,"Tipologia" ,"Classificazione" ,
                                         "Denominazione" , "Indirizzo" , "Singole",
@@ -16,12 +16,12 @@ public class Window extends Thread {
                                         "Sestuple","Totale camere" ,"Posti letto" ,"Unita abitative" ,
                                         "Posti letto unita abitative"};
 
-    private JTable dataTable; // Замінюємо JTextArea на JTable
-    private DefaultTableModel tableModel; // Модель таблиці
+    private JTable dataTable;
+    private DefaultTableModel tableModel;
 
     public Window() {}
 
-    public JFrame getFrame() { // Додаємо геттер для отримання JFrame
+    public JFrame getFrame() {
         return f;
     }
 
@@ -51,91 +51,88 @@ public class Window extends Thread {
         comandLineArea.setEditable(false);
         comandLineArea.setLineWrap(true);
         comandLineArea.setWrapStyleWord(true);
-        scrollPane.setPreferredSize(new Dimension(300, 400)); // Збільшуємо висоту JTextArea
+        scrollPane.setPreferredSize(new Dimension(300, 400));
 
-        commandInput = new JTextField(); // Створюємо JTextField
+        commandInput = new JTextField();
         commandInput.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String command = commandInput.getText();// Отримуємо текст з JTextField
+                String command = commandInput.getText();
                 if (command.equals("END")){
                     Main.exit = true;
                     f.dispose();
                 }
                 System.out.println("command: " + command);
-
-                // Тут ви можете передати команду для обробки
                 Main.setOutToServer(command);
-                commandInput.setText(""); // Очищаємо JTextField після виконання (за бажанням)
+                commandInput.setText("");
             }
         });
 
-        panel.add(scrollPane, BorderLayout.CENTER); // Розміщуємо JTextArea зверху
-        panel.add(commandInput, BorderLayout.SOUTH); // Розміщуємо JTextField знизу
+        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(commandInput, BorderLayout.SOUTH);
         panel.setBorder(BorderFactory.createTitledBorder("Command Line"));
         return panel;
     }
 
     public JPanel table() {
         JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout()); // Рекомендується використовувати BorderLayout для розміщення JScrollPane
+        panel.setLayout(new BorderLayout());
 
         // Створюємо модель таблиці з заголовками стовпців
-        tableModel = new DefaultTableModel(tableObjects, 0); // 0 - початкова кількість рядків
+        tableModel = new DefaultTableModel(tableObjects, 0);
 
         // Створюємо JTable з моделлю таблиці
         dataTable = new JTable(tableModel);
-        dataTable.setFillsViewportHeight(true); // Забезпечує заповнення видимої області прокрутки
+        dataTable.setFillsViewportHeight(true);
 
         // Створюємо JScrollPane та додаємо до нього JTable
         JScrollPane scrollPane = new JScrollPane(dataTable);
-        scrollPane.setPreferredSize(new Dimension(450, 500)); // Встановлюємо бажаний розмір прокрутки
+        scrollPane.setPreferredSize(new Dimension(450, 500));
 
         panel.setBorder(BorderFactory.createTitledBorder("Table"));
-        panel.add(scrollPane, BorderLayout.CENTER); // Додаємо прокрутку до панелі
+        panel.add(scrollPane, BorderLayout.CENTER);
         return panel;
     }
 
     public void dataProcessing(String response){
         String [] records = response.split("&");
-        for (int i = 1; i < records.length; i++) { // Починаємо з 1, якщо перший елемент містить щось, що не є даними
+        for (int i = 1; i < records.length; i++) {
             String record = records[i];
             String[] values = record.split(",");
-            addRowToTable(values); // Передаємо одновимірний масив значень для одного рядка
-            System.out.println("Додано рядок до таблиці: " + java.util.Arrays.toString(values));
+            addRowToTable(values);
         }
     }
 
-    // Метод для додавання рядка даних до таблиці
+    // Method for adding a row of data to the table
     public void addRowToTable(Object[] rowData) {
         if (tableModel != null) {
             tableModel.addRow(rowData);
         }
     }
 
-    // Метод для очищення всіх рядків з таблиці
+    // Method to clear all rows from a table
     public void clearTable() {
         if (tableModel != null) {
             tableModel.setRowCount(0);
         }
     }
 
-    // Метод для отримання тексту з області команд (JTextArea)
+    // Method for getting text from the command area (JTextArea)
     public String getCommandLineAreaText() {
         return comandLineArea.getText();
     }
 
-    // Метод для встановлення тексту в область команд (JTextArea)
+    // Method for setting text in the command area (JTextArea)
     public void setCommandLineAreaText(String text) {
         comandLineArea.setText(text);
     }
 
-    // Метод для отримання тексту з поля введення команди (JTextField)
+    // Method for getting text from the command input field (JTextField)
     public String getCommandInputText() {
         return commandInput.getText();
     }
 
-    // Метод для встановлення тексту в поле введення команди (JTextField)
+    // Method for setting text in the command input field (JTextField)
     public void setCommandInputText(String text) {
         commandInput.setText(text);
     }
