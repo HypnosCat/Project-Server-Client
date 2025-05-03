@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.*;
 
@@ -11,8 +12,8 @@ public class Window extends Thread {
     public final int LUNGEZZA = 1000;
     public JTextArea ServerStatusMSG = new JTextArea();
     public JTabbedPane clientTabbedPane = new JTabbedPane();
-    private int clientCount = 0; // To keep track of the number of clients
-    private ArrayList<Client> activeClients  = new ArrayList<>();
+
+    private HashMap<String,Client> activeClients  = new HashMap();
     private JPanel clientStatusPanel;
 
     public Window() {}
@@ -67,10 +68,10 @@ public class Window extends Thread {
     }
 
     // Method to add a new client
-    public int addClient() {
-        clientCount++; // Increment the client count
+    public String addClient() {
         Client client = new Client(activeClients.size());
-        activeClients.add(client);
+        String title = "Client " + activeClients.size();
+        activeClients.put(title,client);
 /*
         JTextArea clientTextArea = new JTextArea();
         clientTextArea.setEditable(false);
@@ -80,12 +81,11 @@ public class Window extends Thread {
 
         JScrollPane scrollPane = new JScrollPane(client.getTextArea());
         scrollPane.setPreferredSize(new Dimension(500, ALTEZZA));
-
         // Create a new tab for the client
-        clientTabbedPane.addTab("Client " + clientCount, scrollPane);
+        clientTabbedPane.addTab(title, scrollPane);
 
         updateClientStatusPanel();
-        return  clientCount-1;
+        return  title;
     }
 
     // Method to update the client status panel
@@ -101,20 +101,15 @@ public class Window extends Thread {
         ServerStatusMSG.append(msg + "\n");
     }
 
-    public void setClientMSG(int clientIndex, String msg) {
-        if (clientIndex >= 0 && clientIndex < activeClients.size()) {
-            JTextArea clientTextArea = activeClients.get(clientIndex).getTextArea();
-            clientTextArea.append(msg + "\n");
-        }
+    public void setClientMSG(String clientIndex, String msg) {
+        JTextArea clientTextArea = activeClients.get(clientIndex).getTextArea();
+        clientTextArea.append(msg + "\n");
     }
 
-    public void removeClient(int index) {
-        if (index >= 0 && index < activeClients.size()) {
-            clientTabbedPane.removeTabAt(index); // Видалити вкладку
-            activeClients.remove(index); // Видалити з списку
-            updateClientStatusPanel();
-        } else {
-            System.out.println("Invalid index: " + index);
-        }
+    public void removeClient(String clientIndex) {
+        int index = clientTabbedPane.indexOfTab(clientIndex);
+        clientTabbedPane.removeTabAt(index);
+        activeClients.remove(clientIndex);
+        updateClientStatusPanel();
     }
 }

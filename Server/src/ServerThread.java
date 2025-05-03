@@ -19,7 +19,7 @@ public class ServerThread extends Thread {
     private PrintWriter out = null;
     private DataBaseManager dataBaseManager = null;
     private Window window = null;
-    private int index = 0;
+    private String index = "";
 
     public ServerThread(Socket clientSocket, DataBaseManager dataBaseManager , Window window) {
         this.clientSocket = clientSocket;
@@ -73,13 +73,14 @@ public class ServerThread extends Thread {
                 }
             }
             clientSocket.close();
-            out.close();
-            in.close();
+            //out.close();
+            //in.close();
             System.out.println("connection completed: " + clientSocket);
             this.window.setServeStatusMSG("!-Connection completed: " + clientSocket+ "\n");
 
             this.window.removeClient(index);
         } catch (IOException e) {
+            this.window.removeClient(index);
             System.err.println("Accept failed");
             System.exit(1);
         }
@@ -138,8 +139,8 @@ public class ServerThread extends Thread {
                 break;
 
             case GET_MUNICIPIO:
-                if (n.length == 3) {
-                    if (!n.equals(HELP)) {
+                if (!n[1].equals(HELP)) {
+                    if (n.length == 3) {
                         if (!n[1].isEmpty() & !n[2].isEmpty()) {
                             String strM = n[1];
                             String strMEX = n[2];
@@ -151,16 +152,15 @@ public class ServerThread extends Thread {
                             msg = dataM;
                         }
                     } else {
-                        msg = GET_MUNICIPIO
-                                + " P1 p2 <-(the first parametr is STRING , the second parametr is STRING) Exempl of comand -> "
-                                + GET_MUNICIPIO + " I XVII";
+                        msg = "incomplete command !";
                     }
-
                 } else {
-                    msg = "incomplete command !";
+                    msg = GET_MUNICIPIO
+                            + " P1 p2 <-(the first parametr is STRING , the second parametr is STRING) Exempl of comand -> "
+                            + GET_MUNICIPIO + " I XVII";
                 }
-
                 break;
+            default: msg = "";
         }
         return msg;
     }
