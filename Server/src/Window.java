@@ -58,7 +58,7 @@ public class Window extends Thread {
         ServerStatusMSG.setEditable(false);
         ServerStatusMSG.setLineWrap(true);
         ServerStatusMSG.setWrapStyleWord(true);
-        ServerStatusMSG.setBackground(Color.LIGHT_GRAY);
+        //ServerStatusMSG.setBackground(Color.LIGHT_GRAY);
         ServerStatusMSG.setPreferredSize(new Dimension(500, 1000));
 
         scrollPane.setPreferredSize(new Dimension(440, 400));
@@ -72,12 +72,11 @@ public class Window extends Thread {
         Client client = new Client(activeClients.size());
         String title = "Client " + activeClients.size();
         activeClients.put(title,client);
-/*
+
         JTextArea clientTextArea = new JTextArea();
         clientTextArea.setEditable(false);
         clientTextArea.setLineWrap(true);
         clientTextArea.setWrapStyleWord(true);
-        clientTextArea.setBackground(Color.LIGHT_GRAY);*/
 
         JScrollPane scrollPane = new JScrollPane(client.getTextArea());
         scrollPane.setPreferredSize(new Dimension(500, ALTEZZA));

@@ -43,17 +43,17 @@ public class ServerThread extends Thread {
             out.flush();
             String str;
             while (true) {
-                str = in.readLine(); // Читання рядка з клієнта
+                str = in.readLine(); // Reading a string from the client
 
                 if (str == null || str.isEmpty()) {
                     out.println(">: ");
                     out.flush();
-                    continue; // Якщо рядок порожній, продовжити цикл
+                    continue; // If the string is empty, continue the loop
                 }
 
                 System.out.println("Da client: " + str);
                 this.window.setClientMSG(index,"- Сommands: " + str +"  -> entered by the client: " + clientSocket+ "\n");
-                // Обробка команди
+              
                 String msg = manager(str);
                 if (msg != null) {
                     out.println(">: " + msg);
