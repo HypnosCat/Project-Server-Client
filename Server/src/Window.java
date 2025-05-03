@@ -61,7 +61,7 @@ public class Window extends Thread {
         ServerStatusMSG.setBackground(Color.LIGHT_GRAY);
         ServerStatusMSG.setPreferredSize(new Dimension(500, 1000));
 
-        scrollPane.setPreferredSize(new Dimension(440, 200));
+        scrollPane.setPreferredSize(new Dimension(440, 400));
         panel.setBorder(BorderFactory.createTitledBorder("Server Status"));
         panel.add(scrollPane);
         return panel;

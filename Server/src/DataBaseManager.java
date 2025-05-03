@@ -13,7 +13,7 @@ public class DataBaseManager {
         }
 
         public String findDataByTipologia(String tipologia){
-            String msg = "";
+            String msg = " & ";
             for(java.util.Map.Entry<String, SectionDataBase> entry: listDB.entrySet()){
                 String key = entry.getKey();
                 SectionDataBase value = entry.getValue();
@@ -25,7 +25,7 @@ public class DataBaseManager {
         }
 
         public String findDataByCategoria(String categoriaN){
-            String msg = "";
+            String msg = " & ";
             for(java.util.Map.Entry<String, SectionDataBase> entry: listDB.entrySet()){
                 SectionDataBase value = entry.getValue();
                 msg += value.getDataByCategoria(categoriaN);
@@ -34,7 +34,7 @@ public class DataBaseManager {
         }
 
         public String findDataByMunicipio(String municipioN , String municipioNEX){
-            String msg = "";
+            String msg = " & ";
             for(java.util.Map.Entry<String, SectionDataBase> entry: listDB.entrySet()){
                 SectionDataBase value = entry.getValue();
                 msg += value.getDataByMunicipio(municipioN, municipioNEX);

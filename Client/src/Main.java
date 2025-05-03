@@ -1,4 +1,5 @@
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +12,9 @@ import java.util.Scanner;
 public class Main {
     final static String nomeServer = "localhost";
     final static int portaServer = 1050;
+    public final static Window window = new Window();
+    public static boolean exit = false;
+    private static PrintWriter outToServer;
 
     public static void main(String[] args) {
         System.out.println("Connessione al server in corso...");
@@ -19,7 +23,10 @@ public class Main {
             String loc = sck.getLocalSocketAddress().toString();
             System.out.format("Server (remoto): %s%n", rem);
             System.out.format("Client (client): %s%n", loc);
-            comunica(sck);
+            initOutToServer(sck);
+            window.start();
+            startServerListener(sck, window); // Запускаємо окремий потік для прослуховування сервера
+            handleUserInput(); // Основний потік відповідає за введення з терміналу
         } catch (UnknownHostException e) {
             System.err.format("Nome di server non valido: %s%n", e.getMessage());
         } catch (IOException e) {
@@ -28,24 +35,62 @@ public class Main {
         }
     }
 
-    public static void comunica(Socket sck) throws IOException {
-        boolean exit = false;
-        BufferedReader in = new BufferedReader(new InputStreamReader(sck.getInputStream()));
-        PrintWriter out = new PrintWriter(new OutputStreamWriter(sck.getOutputStream()), true);
-        Scanner s = new Scanner(System.in, "UTF-8");
-        String response = "";
-        do {
-            response = in.readLine();
-            System.out.print(response);
-            String comand = s.nextLine();
-            // System.out.format("Invio al server: %s%n" + "\n", comand);
-            out.println(comand);
-            out.flush();
-            
-            if (comand.equals("END")) {
-                exit = true;
+    private static void handleUserInput() {
+        try (Scanner scanner = new Scanner(System.in, "UTF-8")) {
+            String command;
+            while (true) {
+                command = scanner.nextLine();
+                outToServer.println(command);
+                outToServer.flush();
+                if (command.equals("END") || exit) {
+                    exit = true;
+                    SwingUtilities.invokeLater(() -> {
+                        JFrame frame = window.getFrame();
+                        if (frame != null) {
+                            frame.dispose(); // Закриваємо вікно
+                        }
+                    });
+                    break;
+                }
             }
-        } while (!exit);
-        s.close();
+        }
+    }
+
+    private static void startServerListener(Socket sck, Window window) {
+        new Thread(() -> {
+            try (BufferedReader inFromServer = new BufferedReader(new InputStreamReader(sck.getInputStream()))) {
+                String response;
+                while (!exit && (response = inFromServer.readLine()) != null) { // Перевіряємо exit на кожній ітерації
+                    //System.out.print(response);
+                    String [] splitMSG = response.split(" ");
+
+                    if (splitMSG.length > 1 ){
+                        if(splitMSG[1].equals("+") || splitMSG[1].equals("!")){
+                            window.setCommandLineAreaText(window.getCommandLineAreaText() + "Server: " + response + "\n");
+                        }
+                        if (splitMSG[2].equals("&")){
+                            window.clearTable();
+                            window.dataProcessing(response);
+                        }
+                    }
+                }
+                System.out.println("Server listening thread completed."); // Додано повідомлення про завершення
+            } catch (IOException e) {
+                System.err.println("Error reading from server: " + e.getMessage());
+            }
+        }).start();
+    }
+
+    public static void initOutToServer(Socket sck) throws IOException {
+        outToServer = new PrintWriter(new OutputStreamWriter(sck.getOutputStream()), true);
+    }
+
+    public static void setOutToServer(String msg) {
+        if (outToServer != null) {
+            outToServer.println(msg);
+            outToServer.flush();
+        } else {
+            System.err.println("Error: outToServer not initialized.");
+        }
     }
 }
