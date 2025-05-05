@@ -1,7 +1,4 @@
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class SectionDataBase {
     private List<Data> lastData = new LinkedList<>();
@@ -29,38 +26,100 @@ public class SectionDataBase {
     }
 
     public String getDataByCategoria(String categoriaN){
-        String msg ="";
+        StringBuilder msg = new StringBuilder();
         Iterator<Data> iterator = lastData.iterator();
         while (iterator.hasNext()){
             Data data = iterator.next();
-            if (data.getClassificazione().equals("Categoria "+categoriaN)){
-                msg += data.toString();
+            if (data.getClassificazione().equalsIgnoreCase(categoriaN)){
+                msg.append(data.toString());
             }
         }
-        return msg;
+        return msg.toString();
     }
 
     public String getDataByMunicipio(String municipioN ,String municipioNEX){
-        String msg ="";
+        StringBuilder msg = new StringBuilder();
         Iterator<Data> iterator = lastData.iterator();
         while (iterator.hasNext()){
             Data data = iterator.next();
-            if (data.getMunicipio().equals("Municipio "+municipioN+" (ex Mun "+municipioNEX+")")){
+            if (data.getMunicipio().equalsIgnoreCase("Municipio "+municipioN+" (ex Mun "+municipioNEX+")")){
                 //Debugging output
                 //System.out.println("Municipio "+municipioN+" (ex Mun "+municipioNEX+")");
-                msg += data.toString();
+                msg.append(data.toString());
             }
         }
-        return msg;
+        return msg.toString();
     }
 
     public String getDataByTipologia(){
-        String msg ="";
+        StringBuilder msg = new StringBuilder();
         Iterator<Data> iterator = lastData.iterator();
         while (iterator.hasNext()){
             Data data = iterator.next();
-            msg += data.toString();
+            msg.append(data.toString());
         }
-        return msg;
+        return msg.toString();
+    }
+
+    public String getDataByKeyword(String keyWord){
+        StringBuilder msg = new StringBuilder();
+        Iterator<Data> iterator = lastData.iterator();
+        String lowerKeyWord = keyWord.toLowerCase(); // Для пошуку без урахування регістру
+        while (iterator.hasNext()) {
+            Data data = iterator.next();
+            if (data.getMunicipio().toLowerCase().contains(lowerKeyWord) ||
+                    data.getTipologia().toLowerCase().contains(lowerKeyWord) ||
+                    data.getClassificazione().toLowerCase().contains(lowerKeyWord) ||
+                    data.getDenominazione().toLowerCase().contains(lowerKeyWord) ||
+                    data.getIndirizzo().toLowerCase().contains(lowerKeyWord)) {
+                msg.append(data.toString());
+            }
+        }
+        return msg.toString();
+    }
+
+    public String getAllTipologia() {
+        Set<String> uniqueTipologie = new HashSet<>();
+        Iterator<Data> iterator = lastData.iterator();
+        while (iterator.hasNext()) {
+            Data data = iterator.next();
+            uniqueTipologie.add(data.getTipologia()+"|");
+        }
+
+        StringBuilder msgBuilder = new StringBuilder();
+        for (String tipologia : uniqueTipologie) {
+            msgBuilder.append(tipologia);
+        }
+        return msgBuilder.toString();
+    }
+
+    public String getAllCategoria() {
+        Set<String> uniqueTipologie = new HashSet<>();
+        Iterator<Data> iterator = lastData.iterator();
+        while (iterator.hasNext()) {
+            Data data = iterator.next();
+            uniqueTipologie.add(data.getClassificazione()+"|");
+        }
+
+        StringBuilder msgBuilder = new StringBuilder();
+        for (String tipologia : uniqueTipologie) {
+            msgBuilder.append(tipologia);
+        }
+        return msgBuilder.toString();
+    }
+
+    public String getAllMunicipio() {
+        Set<String> uniqueTipologie = new HashSet<>();
+        Iterator<Data> iterator = lastData.iterator();
+        while (iterator.hasNext()) {
+            Data data = iterator.next();
+            uniqueTipologie.add(data.getMunicipio()+"|");
+        }
+
+        StringBuilder msgBuilder = new StringBuilder();
+        for (String tipologia : uniqueTipologie) {
+            msgBuilder.append(tipologia);
+        }
+        return msgBuilder.toString();
     }
 }

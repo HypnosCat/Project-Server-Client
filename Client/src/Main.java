@@ -15,7 +15,6 @@ public class Main {
     public final static Window window = new Window();
     public static boolean exit = false;
     private static PrintWriter outToServer;
-
     public static void main(String[] args) {
         System.out.println("Connessione al server in corso...");
         try (Socket sck = new Socket(nomeServer, portaServer)) {
@@ -25,8 +24,8 @@ public class Main {
             System.out.format("Client (client): %s%n", loc);
             initOutToServer(sck);
             window.start();
-            startServerListener(sck, window); // Запускаємо окремий потік для прослуховування сервера
-            handleUserInput(); // Основний потік відповідає за введення з терміналу
+            startServerListener(sck, window);
+            //handleUserInput(); currently not functional
         } catch (UnknownHostException e) {
             System.err.format("Nome di server non valido: %s%n", e.getMessage());
         } catch (IOException e) {
@@ -47,7 +46,7 @@ public class Main {
                     SwingUtilities.invokeLater(() -> {
                         JFrame frame = window.getFrame();
                         if (frame != null) {
-                            frame.dispose(); // Закриваємо вікно
+                            frame.dispose();
                         }
                     });
                     break;
@@ -59,22 +58,28 @@ public class Main {
     private static void startServerListener(Socket sck, Window window) {
         new Thread(() -> {
             try (BufferedReader inFromServer = new BufferedReader(new InputStreamReader(sck.getInputStream()))) {
-                String response;
-                while (!exit && (response = inFromServer.readLine()) != null) { // Перевіряємо exit на кожній ітерації
-                    //System.out.print(response);
+            String response ;
+                while (!exit && (response = inFromServer.readLine()) != null) {
                     String [] splitMSG = response.split(" ");
 
                     if (splitMSG.length > 1 ){
                         if(splitMSG[1].equals("+") || splitMSG[1].equals("!")){
                             window.setCommandLineAreaText(window.getCommandLineAreaText() + "Server: " + response + "\n");
                         }
-                        if (splitMSG[2].equals("&")){
+                        if (splitMSG.length > 2 && splitMSG[2].equals("$")){
                             window.clearTable();
                             window.dataProcessing(response);
                         }
+                        if (splitMSG[1].equals("LIST")){
+                            String [] msg  = response.split("\\|");
+                            for (int i = 1; i < msg.length; i++) {
+                                System.out.print(msg[i]);
+                                window.setCommandLineAreaText(window.getCommandLineAreaText() + "Server: " + msg[i] + "\n");
+                            }
+                        }
                     }
                 }
-                System.out.println("Server listening thread completed."); // Додано повідомлення про завершення
+                System.out.println("Server listening thread completed.");
             } catch (IOException e) {
                 System.err.println("Error reading from server: " + e.getMessage());
             }

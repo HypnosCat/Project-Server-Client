@@ -37,7 +37,7 @@ public class Data {
     }
 
     public String getMunicipio() {
-        return Municipio;
+        return Municipio ;
     }
 
     public void setMunicipio(String municipio) {
@@ -45,7 +45,7 @@ public class Data {
     }
 
     public String getTipologia() {
-        return Tipologia;
+        return Tipologia ;
     }
 
     public void setTipologia(String tipologia) {
@@ -53,7 +53,7 @@ public class Data {
     }
 
     public String getClassificazione() {
-        return Classificazione;
+        return Classificazione ;
     }
 
     public void setClassificazione(String classificazione) {
@@ -61,7 +61,7 @@ public class Data {
     }
 
     public String getDenominazione() {
-        return Denominazione;
+        return Denominazione ;
     }
 
     public void setDenominazione(String denominazione) {
@@ -69,7 +69,7 @@ public class Data {
     }
 
     public String getIndirizzo() {
-        return Indirizzo;
+        return Indirizzo ;
     }
 
     public void setIndirizzo(String indirizzo) {
@@ -158,11 +158,11 @@ public class Data {
 
     @Override
     public String toString() {
-        return "\t" + Municipio + "," + Tipologia + "," + Classificazione
-                + "," + Denominazione + "," + Indirizzo + "," + Singole
-                + ","+ Doppie + "," + Triple + "," + Quadruple + "," + Quintuple
-                + "," + Sestuple + "," + TotaleCamere + "," + PostiLetto
-                + "," + UnitaAbitative + "," + PostiLettoUnitaAbitative + " &";
+        return "\t" + Municipio + "|" + Tipologia + "|" + Classificazione
+                + "|" + Denominazione + "|" + Indirizzo + "|" + Singole
+                + "|"+ Doppie + "|" + Triple + "|" + Quadruple + "|" + Quintuple
+                + "|" + Sestuple + "|" + TotaleCamere + "|" + PostiLetto
+                + "|" + UnitaAbitative + "|" + PostiLettoUnitaAbitative + " $";
     }
 
 }

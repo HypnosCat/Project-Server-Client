@@ -62,7 +62,7 @@ public class Window extends Thread {
                     Main.exit = true;
                     f.dispose();
                 }
-                System.out.println("command: " + command);
+                System.out.println("command GUI: " + command);
                 Main.setOutToServer(command);
                 commandInput.setText("");
             }
@@ -78,16 +78,13 @@ public class Window extends Thread {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
-        // Створюємо модель таблиці з заголовками стовпців
         tableModel = new DefaultTableModel(tableObjects, 0);
 
-        // Створюємо JTable з моделлю таблиці
         dataTable = new JTable(tableModel);
         dataTable.setFillsViewportHeight(true);
 
-        // Створюємо JScrollPane та додаємо до нього JTable
         JScrollPane scrollPane = new JScrollPane(dataTable);
-        scrollPane.setPreferredSize(new Dimension(450, 500));
+        scrollPane.setPreferredSize(new Dimension(450, 1000));
 
         panel.setBorder(BorderFactory.createTitledBorder("Table"));
         panel.add(scrollPane, BorderLayout.CENTER);
@@ -95,10 +92,10 @@ public class Window extends Thread {
     }
 
     public void dataProcessing(String response){
-        String [] records = response.split("&");
+        String [] records = response.split("\\$");
         for (int i = 1; i < records.length; i++) {
             String record = records[i];
-            String[] values = record.split(",");
+            String[] values = record.split("\\|");
             addRowToTable(values);
         }
     }

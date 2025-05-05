@@ -10,9 +10,13 @@ public class ServerThread extends Thread {
     private final String GET_TYPE = "GET_T";
     private final String GET_CATEGORY = "GET_C";
     private final String GET_MUNICIPIO = "GET_M";
+    private final String FIND_KEYWORD = "FIND";
+    private final String GET_LIST_T = "GET_LT";
+    private final String GET_LIST_C = "GET_LC";
+    private final String GET_LIST_M = "GET_LM";
     private final String TEST = "TEST";
     private final String MAN = "MAN";
-    private final String HELP = "-H";
+    private final String HELP = "H";
 
     private Socket clientSocket = null;
     private BufferedReader in = null;
@@ -95,11 +99,18 @@ public class ServerThread extends Thread {
     public String manager(String srt) {
         String msg = null;
 
-        String[] n = srt.split(" ");
+        String[] n = srt.split("-");
 
         switch (n[0]) {
             case MAN:
-                msg = "+ Comands: " + GET_TYPE +" returns all data that are the same type "+ " ; " + GET_CATEGORY + " returns all data that are the same category "+" ; " + GET_MUNICIPIO + " returns all data that are the same 'municipio' ";
+                msg = "+ Comands: "
+                        + GET_TYPE +"- returns all data that are the same type "+ " ; "
+                        + GET_CATEGORY + "- returns all data that are the same category "+" ; "
+                        + GET_MUNICIPIO + "- returns all data that are the same 'municipio' "+" ; "
+                        + GET_LIST_T +"- returns all Type name "+" ; "
+                        + GET_LIST_C +"- returns all  Category name "+" ; "
+                        + GET_LIST_M +"- returns all 'municipio' name "+" ; "
+                        + FIND_KEYWORD +"- returns all all data are the same sequence of char"+" ; ";
                 break;
 
             case TEST:
@@ -116,7 +127,7 @@ public class ServerThread extends Thread {
                         // System.out.println(data);
                         msg = dataT;
                     } else {
-                        msg = "+ "+GET_TYPE + " P <-(parametr is STRING) Exempl of comand -> "+GET_TYPE + " Residence";
+                        msg = "+ "+GET_TYPE + "-P <-(parametr is STRING) Exempl of comand -> "+GET_TYPE + "-Residence";
                     }
 
                 } else {
@@ -133,10 +144,10 @@ public class ServerThread extends Thread {
                         this.window.setClientMSG(index,"sending data to the client: " + clientSocket + "\n");
 
                         // Debugging output
-                        //System.out.println(dataC);
+                        System.out.println(dataC);
                         msg = dataC;
                     } else {
-                        msg = "+ "+GET_CATEGORY + " P <-(parametr is INTEGER) Exempl of comand -> "+ GET_CATEGORY +" 1" ;
+                        msg = "+ "+GET_CATEGORY + "-P <-(parametr is String) Exempl of comand -> "+ GET_CATEGORY +"-Categoria 1 or Unica" ;
                     }
                 } else {
                     msg = "! incomplete command !";
@@ -145,11 +156,12 @@ public class ServerThread extends Thread {
                 break;
 
             case GET_MUNICIPIO:
+                String[] p = n[1].split(" ");
                 if (!n[1].equals(HELP)) {
-                    if (n.length == 3) {
-                        if (!n[1].isEmpty() & !n[2].isEmpty()) {
-                            String strM = n[1];
-                            String strMEX = n[2];
+                    if (p.length == 2) {
+                        if (!p[0].isEmpty() & !p[1].isEmpty()) {
+                            String strM = p[0];
+                            String strMEX = p[1];
                             String dataM = dataBaseManager.findDataByMunicipio(strM, strMEX);
                             System.out.println("sending data to the client: " + clientSocket + "\n");
                             this.window.setClientMSG(index,"sending data to the client: " + clientSocket + "\n");
@@ -162,9 +174,47 @@ public class ServerThread extends Thread {
                     }
                 } else {
                     msg = "+ "+GET_MUNICIPIO
-                            + " P1 p2 <-(the first parametr is STRING , the second parametr is STRING) Exempl of comand -> "
-                            + GET_MUNICIPIO + " I XVII";
+                            + "-P1 p2 <-(the first parametr is STRING , the second parametr is STRING) Exempl of comand -> "
+                            + GET_MUNICIPIO + "-I XVII";
                 }
+                break;
+            case FIND_KEYWORD:
+                if (n.length == 2) {
+                    if (!n[1].equals(HELP)) {
+                        String dataT = dataBaseManager.findDataByKeyword(n[1]);
+                        System.out.println("sending data to the client: " + clientSocket + "\n");
+                        this.window.setClientMSG(index,"sending data to the client: " + clientSocket + "\n");
+                        // Debugging output
+                        // System.out.println(data);
+                        msg = dataT;
+                    } else {
+                        msg = "+ "+FIND_KEYWORD + "-P <-(parametr is STRING) Exempl of comand -> "+FIND_KEYWORD + "-ost";
+                    }
+
+                } else {
+                    msg = "! incomplete command !";
+                }
+                break;
+
+            case GET_LIST_T:
+                String dataT = dataBaseManager.getListOfT();
+                System.out.println("sending data to the client: " + clientSocket + "\n");
+                this.window.setClientMSG(index,"sending data to the client: " + clientSocket + "\n");
+                msg = dataT;
+                break;
+
+            case GET_LIST_C:
+                String dataC = dataBaseManager.getListOfC();
+                System.out.println("sending data to the client: " + clientSocket + "\n");
+                this.window.setClientMSG(index,"sending data to the client: " + clientSocket + "\n");
+                msg = dataC;
+                break;
+
+            case GET_LIST_M:
+                String dataM = dataBaseManager.getListOfM();
+                System.out.println("sending data to the client: " + clientSocket + "\n");
+                this.window.setClientMSG(index,"sending data to the client: " + clientSocket + "\n");
+                msg = dataM;
                 break;
             default: msg = "";
         }

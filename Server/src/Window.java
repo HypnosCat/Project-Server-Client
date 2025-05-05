@@ -59,7 +59,7 @@ public class Window extends Thread {
         ServerStatusMSG.setLineWrap(true);
         ServerStatusMSG.setWrapStyleWord(true);
         //ServerStatusMSG.setBackground(Color.LIGHT_GRAY);
-        ServerStatusMSG.setPreferredSize(new Dimension(500, 1000));
+        ServerStatusMSG.setPreferredSize(new Dimension(500, 2000));
 
         scrollPane.setPreferredSize(new Dimension(440, 400));
         panel.setBorder(BorderFactory.createTitledBorder("Server Status"));
