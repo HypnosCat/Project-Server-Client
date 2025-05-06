@@ -19,17 +19,17 @@ the client graphical interface is divided into two parts: Table (on the right) a
   ?-Table displays data in the form of a table.
 
 ## Commands (P is a parameter):
-                  !(P is a parameter)!
-GET_T-(P) -> returns data that have the same type
-GET_C-(P) -> returns data that have the same category / classification
-GET_M-(P1) (P2) -> returns data that have the same municipality
+<div>!(P is a parameter)!</div>
+<div> GET_T-(P) -> returns data that have the same type </div>
+<div>GET_C-(P) -> returns data that have the same category / classification</div>
+<div>GET_M-(P1) (P2) -> returns data that have the same municipality</div>
 
-FIND-(P) -> returns data that have the same keyword
+<p>FIND-(P) -> returns data that have the same keyword</p>
 
-GET_LT -> returns a list of all types
-GET_LC -> returns a list of all categories / classifications
-GET_LM -> returns a list of all municipalities
+<div>GET_LT -> returns a list of all types</div>
+<div>GET_LC -> returns a list of all categories / classifications</div>
+<div>GET_LM -> returns a list of all municipalities</div>
 
-MAN -> returns a list of all commands and their purpose
+<div>MAN -> returns a list of all commands and their purpose</div>
 
-comands + -H (Help)-> provides information about the command and its purpose.
+<div>comands + -H (Help)-> provides information about the command and its purpose.</div>
