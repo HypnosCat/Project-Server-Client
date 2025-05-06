@@ -20,17 +20,17 @@ the server graphical interface is divided into two parts Client Status (on the r
  - ?-Table displays data in the form of a table.
 
 ## Commands (P is a parameter):
-- <div>!(P is a parameter)!</div>
-<div> GET_T-(P) -> returns data that have the same type </div>
-<div>GET_C-(P) -> returns data that have the same category / classification</div>
-<div>GET_M-(P1) (P2) -> returns data that have the same municipality</div>
+<div>!(P is a parameter)!</div>
+- <div> GET_T-(P String) -> returns data that have the same type </div>
+- <div>GET_C-(P String) -> returns data that have the same category / classification</div>
+- <div>GET_M-(P1 String) (P2 String) -> returns data that have the same municipality</div>
 
-<p>FIND-(P) -> returns data that have the same keyword</p>
+- <p>FIND-(P String) -> returns data that have the same keyword</p>
 
-<div>GET_LT -> returns a list of all types</div>
-<div>GET_LC -> returns a list of all categories / classifications</div>
-<div>GET_LM -> returns a list of all municipalities</div>
+- <div>GET_LT -> returns a list of all types</div>
+- <div>GET_LC -> returns a list of all categories / classifications</div>
+- <div>GET_LM -> returns a list of all municipalities</div>
 
-<div>MAN -> returns a list of all commands and their purpose</div>
+- <div>MAN -> returns a list of all commands and their purpose</div>
 
 <div>comands + -H (Help)-> provides information about the command and its purpose.</div>
