@@ -20,7 +20,7 @@ the server graphical interface is divided into two parts Client Status (on the r
  - ?-Table displays data in the form of a table.
 
 ## Commands (P is a parameter):
-<div>!(P is a parameter)!</div>
+- <div>!(P is a parameter)!</div>
 <div> GET_T-(P) -> returns data that have the same type </div>
 <div>GET_C-(P) -> returns data that have the same category / classification</div>
 <div>GET_M-(P1) (P2) -> returns data that have the same municipality</div>
