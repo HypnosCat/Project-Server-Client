@@ -1,5 +1,6 @@
 #Project-Server-Client
-simple implementation of the server and client using the Java programming language.
+
+<div>simple implementation of the server and client using the Java programming language.</div>
 
 ## To get started: 
   first -> start the server program in the Server folder run Main class. 
