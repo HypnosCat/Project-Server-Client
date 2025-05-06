@@ -25,33 +25,21 @@ public class Main {
             initOutToServer(sck);
             window.start();
             startServerListener(sck, window);
-            handleUserInput(); //currently not functional
+            while (!exit) {
+                try {
+                    Thread.sleep(1000); // Sleep for a short time to prevent busy-waiting
+                } catch (InterruptedException e) {
+                    // Handle interruption if necessary.  For example, if you want
+                    // the program to exit when interrupted.
+                    System.err.println("Main thread interrupted: " + e.getMessage());
+                    exit = true; // Consider setting exit flag here if appropriate
+                }
+            }
         } catch (UnknownHostException e) {
             System.err.format("Nome di server non valido: %s%n", e.getMessage());
         } catch (IOException e) {
             System.err.format("Errore durante la comunicazione con il server: %s%n",
                     e.getMessage());
-        }
-    }
-
-    private static void handleUserInput() {
-        try (Scanner scanner = new Scanner(System.in, "UTF-8")) {
-            String command;
-            while (true) {
-                command = scanner.nextLine();
-                outToServer.println(command);
-                outToServer.flush();
-                if (command.equals("END") || exit) {
-                    exit = true;
-                    SwingUtilities.invokeLater(() -> {
-                        JFrame frame = window.getFrame();
-                        if (frame != null) {
-                            frame.dispose();
-                        }
-                    });
-                    break;
-                }
-            }
         }
     }
 
@@ -96,6 +84,9 @@ public class Main {
             outToServer.flush();
         } else {
             System.err.println("Error: outToServer not initialized.");
+        }
+        if (msg.equalsIgnoreCase("END")){
+            exit = true;
         }
     }
 }

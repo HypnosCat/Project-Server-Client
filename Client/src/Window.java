@@ -59,7 +59,6 @@ public class Window extends Thread {
             public void actionPerformed(ActionEvent e) {
                 String command = commandInput.getText();
                 if (command.equals("END")){
-                    Main.exit = true;
                     f.dispose();
                 }
                 System.out.println("command GUI: " + command);
