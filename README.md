@@ -13,7 +13,7 @@ the server graphical interface is divided into two parts Client Status (on the r
   - ?-Client Status serves - as an indicator of all processes that the user is performing (monitoring user actions).
 
 ## Analysis of the client graphical interface:
-- the client graphical interface is divided into two parts: Table (on the right) and Command Line (on the left).
+ the client graphical interface is divided into two parts: Table (on the right) and Command Line (on the left).
 
  - ?- Command Line is used to enter commands and create requests to obtain data from the server. Command Line is divided into a text field and a text field (it is used       to obtain hints such as incorrect command, help or shortcuts).
 
