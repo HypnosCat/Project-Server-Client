@@ -28,7 +28,7 @@ the server graphical interface is divided into two parts Client Status (on the r
 
 -  GET_C-Unica
     
-<div>The command consists of</div> 
+<div>The command consists of:</div> 
 
 - root (GET_C/M/T)
   
@@ -36,7 +36,7 @@ the server graphical interface is divided into two parts Client Status (on the r
   
 - Parameter (STRING)
   
-<div> (!) It is important when entering a command between the root separator and the parameter (in the case of GET_M-P P the second parameter must be separated by a space) that there should be no spaces.</div> 
+<p> (!) It is important when entering a command between the root separator and the parameter (in the case of GET_M-P P the second parameter must be separated by a space) that there should be no spaces.</p> 
 
 
 
