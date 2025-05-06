@@ -21,12 +21,14 @@ the server graphical interface is divided into two parts Client Status (on the r
 
 # Commands:
 <div>commands can be entered regardless of their case</div>
+
 ## <div>commands structure</div>
-    - GET_C-Unica
+-  GET_C-Unica
+    
 <div>The command consists of</div> 
-- root (GET_C/M/T)
-- separator ( - ) 
-- Parameter (STRING)
+-  root (GET_C/M/T)
+-  separator ( - ) 
+-  Parameter (STRING)
 <div> (!) It is important when entering a command between the root separator and the parameter (in the case of GET_M-P P the second parameter must be separated by a space) that there should be no spaces.</div> 
 
 - <p>!(P is a parameter)!</p>
