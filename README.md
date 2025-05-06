@@ -21,6 +21,7 @@ the server graphical interface is divided into two parts Client Status (on the r
 
 ## Commands (P is a parameter):
 <div>!(P is a parameter)!</div>
+
 - <div> GET_T-(P String) -> returns data that have the same type </div>
 - <div>GET_C-(P String) -> returns data that have the same category / classification</div>
 - <div>GET_M-(P1 String) (P2 String) -> returns data that have the same municipality</div>
