@@ -3,8 +3,8 @@
 <div>simple implementation of the server and client using the Java programming language.</div>
 
 ## To get started: 
- - <div>first -> start the server program in the Server folder run Main class. </div>
- - <div>second->To connect to the server, you can use the Telnet protocol (ip 127.0.0.1 port 1050), or start the client interface int the Client folder run Main class.</div>
+ - <div>first -> To run the server program, go to the Server folder and run the Main class. </div>
+ - <div>second-> To connect to the server, you can use the Telnet protocol (ip 127.0.0.1 port 1050) or launch the client interface by going to the Client folder and executing the Main class.</div>
   
 ## Analysis of the server graphical interface:
 the server graphical interface is divided into two parts Client Status (on the right) and Server Status (on the left).
@@ -19,8 +19,17 @@ the server graphical interface is divided into two parts Client Status (on the r
 
  - ?-Table displays data in the form of a table.
 
-## Commands (P is a parameter):
-<div>!(P is a parameter)!</div>
+# Commands:
+<div>commands can be entered regardless of their case</div>
+## <div>commands structure</div>
+    - GET_C-Unica
+<div>The command consists of</div> 
+- root (GET_C/M/T)
+- separator ( - ) 
+- Parameter (STRING)
+<div> (!) It is important when entering a command between the root separator and the parameter (in the case of GET_M-P P the second parameter must be separated by a space) that there should be no spaces.</div> 
+
+- <p>!(P is a parameter)!</p>
 
 - <div> GET_T-(P String) -> returns data that have the same type </div>
 - <div>GET_C-(P String) -> returns data that have the same category / classification</div>
