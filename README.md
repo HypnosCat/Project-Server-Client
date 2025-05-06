@@ -9,15 +9,15 @@
 ## Analysis of the server graphical interface:
 the server graphical interface is divided into two parts Client Status (on the right) and Server Status (on the left).
 
-  ?-Server Status serves - as an indicator of all processes that are taking place (server activation, user connection).
-  ?-Client Status serves - as an indicator of all processes that the user is performing (monitoring user actions).
+  - ?-Server Status serves - as an indicator of all processes that are taking place (server activation, user connection).
+  - ?-Client Status serves - as an indicator of all processes that the user is performing (monitoring user actions).
 
 ## Analysis of the client graphical interface:
-the client graphical interface is divided into two parts: Table (on the right) and Command Line (on the left).
+- the client graphical interface is divided into two parts: Table (on the right) and Command Line (on the left).
 
-  ?- Command Line is used to enter commands and create requests to obtain data from the server. Command Line is divided into a text field and a text field (it is used       to obtain hints such as incorrect command, help or shortcuts).
+ - ?- Command Line is used to enter commands and create requests to obtain data from the server. Command Line is divided into a text field and a text field (it is used       to obtain hints such as incorrect command, help or shortcuts).
 
-  ?-Table displays data in the form of a table.
+ - ?-Table displays data in the form of a table.
 
 ## Commands (P is a parameter):
 <div>!(P is a parameter)!</div>
