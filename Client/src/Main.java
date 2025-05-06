@@ -25,7 +25,7 @@ public class Main {
             initOutToServer(sck);
             window.start();
             startServerListener(sck, window);
-            //handleUserInput(); currently not functional
+            handleUserInput(); //currently not functional
         } catch (UnknownHostException e) {
             System.err.format("Nome di server non valido: %s%n", e.getMessage());
         } catch (IOException e) {
