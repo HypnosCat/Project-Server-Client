@@ -35,3 +35,4 @@ the server graphical interface is divided into two parts Client Status (on the r
 - <p>MAN -> returns a list of all commands and their purpose</p>
 
 - <p>comands + -H (Help)-> provides information about the command and its purpose.</p>
+
