@@ -20,13 +20,14 @@ the server graphical interface is divided into two parts Client Status (on the r
  - ?-Table displays data in the form of a table.
 
 
-# <div>commands structure</div>
+# <div>Commands structure</div>
 <div>commands can be entered regardless of their case</div>
 
 - <p>!(P is a parameter)!</p>
 
--  GET_C-Unica
+
 ##  structure:
+- Exemple: GET_C-Unica
 <div>The command consists of:</div> 
 
 - root (GET_C/M/T)
@@ -37,7 +38,7 @@ the server graphical interface is divided into two parts Client Status (on the r
   
 <p> (!) It is important when entering a command between the root separator and the parameter (in the case of GET_M-P P the second parameter must be separated by a space) that there should be no spaces.</p> 
 
-# Commands:
+# commands:
 
 - <div> GET_T-(P String) -> returns data that have the same type </div>
 - <div>GET_C-(P String) -> returns data that have the same category / classification</div>
