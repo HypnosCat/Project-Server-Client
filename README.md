@@ -32,6 +32,6 @@ the server graphical interface is divided into two parts Client Status (on the r
 - <div>GET_LC -> returns a list of all categories / classifications</div>
 - <div>GET_LM -> returns a list of all municipalities</div>
 
-- <div>MAN -> returns a list of all commands and their purpose</div>
+- <p>MAN -> returns a list of all commands and their purpose</p>
 
-- <div>comands + -H (Help)-> provides information about the command and its purpose.</div>
+- <p>comands + -H (Help)-> provides information about the command and its purpose.</p>
