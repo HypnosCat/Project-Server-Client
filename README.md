@@ -3,8 +3,8 @@
 <div>simple implementation of the server and client using the Java programming language.</div>
 
 ## To get started: 
-  first -> start the server program in the Server folder run Main class. 
-  second->To connect to the server, you can use the Telnet protocol (ip 127.0.0.1 port 1050), or start the client interface int the Client folder run Main class.
+  <div>first -> start the server program in the Server folder run Main class. </div>
+  <div>second->To connect to the server, you can use the Telnet protocol (ip 127.0.0.1 port 1050), or start the client interface int the Client folder run Main class.</div>
   
 ## Analysis of the server graphical interface:
 the server graphical interface is divided into two parts Client Status (on the right) and Server Status (on the left).
