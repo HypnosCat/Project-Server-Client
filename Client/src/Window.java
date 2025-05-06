@@ -58,7 +58,7 @@ public class Window extends Thread {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String command = commandInput.getText();
-                if (command.equals("END")){
+                if (command.equalsIgnoreCase("END")){
                     f.dispose();
                 }
                 System.out.println("command GUI: " + command);
