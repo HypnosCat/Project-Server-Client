@@ -8,3 +8,6 @@ WORKDIR /app
 EXPOSE 1050
 
 CMD ["java", "-jar" , "ServerM.jar"]
+
+#docker build .
+#docker run -p 1050:1050 <image code>
